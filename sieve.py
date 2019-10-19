@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-
-
 import os
 import os.path
 import sys
@@ -31,6 +29,31 @@ def search(filepaths, name):
             return True, filepath
     return False,""
 
+def get_relpath(base, target):
+    return target.replace(base, '')
+
+def get_dirpath(filepath):
+    return os.path.dirname(filepath)
+
+def get_filename(filepath):
+    return os.path.splitext(os.path.basename(filepath))[0]
+
+
+def expand_directories(d1, d2) :
+    tokens1 = d1.split(os.sep)
+    tokens2 = d2.split(os.sep)
+    return os.sep + os.path.join(*tokens1, *tokens2) + os.sep
+
+
+
+def sieve_get_output_dir(out, selected_filepath, selected_dirpath) :
+    # customer selected filepath + slected dir => relative path
+    dirpath = get_dirpath(selected_filepath)
+    expanding_dirpath = get_relpath(selected_dirpath, dirpath)
+    # output dirpath + relative path => target dir
+    return expand_directories(out, expanding_dirpath)
+
+
 def sieve(org, sel, out):
 
     ofs = generate_files(org)
@@ -43,22 +66,20 @@ def sieve(org, sel, out):
     total = len(sfs)
 
     for sf in sfs:
-        # get select file name only.
-        filename = os.path.splitext(os.path.basename(sf))[0]
+        # get selected file name only.
+        filename = get_filename(sf)
 
-        # releative path
-        # selected file : sel/yyy/xxxx.jpg
-        # relative info : yyy
-        # 1) remove basedir()
-
-        # relative = os.path.(sf - org)
-        # serach the file name in original files.
+        # 2. serach the file name in original files.
         found, filepath = search(ofs, filename)
         if found:
-            # if found copy the filepath to outpu_dir
+            # Create an output directory
+            output_dirpath = sieve_get_output_dir(out, sf, sel)
+            create_directory_if_not_exist(output_dirpath)
+            # Copy the filepath to output directory
+            shutil.copy2(filepath, output_dirpath)
             count+=1
-            shutil.copy2(filepath, output_dir)
         else:
+            # Add missing file list to report later.
             missed.append(filename)
 
     return count, total, missed
@@ -74,7 +95,6 @@ if __name__ == "__main__":
     origin_dir = sys.argv[1]
     select_dir = sys.argv[2]
     output_dir = select_dir + os.sep + "raw"
-    create_directory_if_not_exist(output_dir)
 
     count, total, missed = sieve(origin_dir, select_dir, output_dir)
 
