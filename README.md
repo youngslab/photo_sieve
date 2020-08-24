@@ -8,50 +8,36 @@
 사전에 아래 프로그램이 설치 되어야한다. 만약 설치가 안되었다면 아래 site를 방문하여 설치하도록 한다.
 - [python3](https://www.python.org/downloads/) 
 
-#### 2. sevice.py
-python으로 만들어진 app으로 sieve.py 파일을 download 받아 자신의 home directory에 위치시킨다. 자세한 내용은 아래 `How to download the sieve.py`에서 설명한다. 
-- Windows : `c:\User\XXX`
-- Mac : `Usrs\XXX`
 
-##### How to download the sieve.py
+# 사용 방법
 
-우선 Terminal을 실행 시켜 아래와 같이 file을 download 받는다. Terminal 실행시키는 방법은 아래 `1. Terminal을 실행한다.` 에서 자세한 내용을 확인할 수 있다. 
+## 1. 프로그램을 다운로드 받는다. 
+이 page의 상단에 으로 이동하여 아래 그림과 같이 "Downalod Zip" 버튼을 눌러 프로그램을 다운로드 받아 원하는 위치에 압축을 풀어준다. 
+![](res/1_download.gif)
+
+## 2. Command 실행 창을 연다.
+아래와 같이 파일탐색기로 프로그램의 위치로 이동한후, 위치 창에 "cmd"라고 입력하여 command prompt를 실행한다. 
+![](res/2_cmd.gif)
+
+
+## 3. 프로그램을 실행한다.
+프로그램의 이름은 `sieve.py`이고 아래 2개의 폴더를 입력으로 받는다. 
+1. 원본 폴더 - 원본 파일이 있는 폴더
+2. 선택 폴더 - 고객이 선택한 인코딩된 형식의 파일이 있는 폴더(.jpg)
+
+아래과 같이 프로그램 실행을 위해서는 프로그램 이름, `원본폴더`와 `선택폴더`를 차례로 입력 한다. 파일탐색기에서 Drag&Drop으로도 가능하며, 순서와 띄어 쓰기에 유의한다. 
 
 ```
-## MAC
-> cd ~ 
-> wget https://raw.githubusercontent.com/youngslab/photo_sieve/master/sieve.py
-
-## Windows
-> curl https://raw.githubusercontent.com/youngslab/photo_sieve/master/sieve.py --output sieve.py
+>sieve.py 원본폴더 선택폴더
 ```
 
+아래 예제에서는 프로그램과 함께 제공된 예제 폴더를 사용하여 설명하였다.
 
+![](res/3_run.gif)
 
-# How to use
+## 4. 결과 확인한다. 
+명령이 수행 되면 그 결과로 몇장의 사진이 복사 되었는지, 어떤 파일이 누락 되었는지 간단한 상태를 확인 할 수 있다. 원하는 결과가 나왔는지 로그를 통해 먼저 확인한다. 
 
-### 1. Terminal을 실행한다. 
-photo sieve는 termianl 기반으로 동작하는 app으로 각 OS에 맞는 terminal을 실행 시켜야 한다. Terminal이 실행 된 위치는 보통 기본으로 Home directory이다. 만약 sieve.py가 다른 위치에 있다면 해당 폴더로 이동한다. 
+결과에 문제가 없다면 `선택폴더` 내에 `raw` 폴더가 생성되어 있고, 폴더를 열어보면 원하는 Raw 포맷의 파일들이 복사 되어 있는 것을 확인할 수 있다. 
 
-- Windows: `window key + R` -> "cmd" 입력
-- Mac : `app list` > `기타` -> `termianl` 앱 실행 
-
-
-#### 1. 원본사진들의 폴더를 확인한다. 
-*주의 - 폴더아래 파일들의 이름은 유일해야한다. 그렇지 않다면 원치않는 결과가 나올 수 있음에 유의한다.*)
-
-#### 2. 선택된 사진들의 폴더를 확인한다.  
-
-
-#### 3. 실행
-Terminal에서 python script file을 아래와 같은 명령어로 실행 시킨다.  사진 폴더 입력할 때, Finder/File expleorer 에서 폴더를 terminal로 drag&drop으로 하면 편하다. 
-
-
-##### MAC & Window
-```
-./sieve.py [원본사진 폴더] [선택사진 폴더]
-```
-
-#### 4. 확인
-결과물은 `[선택사진 폴더]\raw` 아래로 복사된며 결과 창에 선택된 사진의 개수와 복사된 사진의 개수를 확인하여 빠진 결과물이 없는지 확인한다. 또 빠진 항목이 있으면 어떤 파일이 빠졌는지 로그가 남음으로 원본 사진을 확인한다. 
-
+![](res/4_result.gif)
